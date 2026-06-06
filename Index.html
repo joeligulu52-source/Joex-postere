@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progressive Sec. School Voting</title>
+</head>
+<body>
+    <img src="logo.png" alt="School Logo" width="100">
+    <h1>Student Election Ballot</h1>
+
+    <form id="votingForm">
+        <label for="president">President:</label>
+        <select name="president" id="president">
+            <option value="candidate1">Candidate A</option>
+            <option value="candidate2">Candidate B</option>
+        </select>
+
+        <br><br>
+        <button type="submit">Submit Vote</button>
+    </form>
+
+    <script>
+        document.getElementById('votingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Thank you for voting!");
+            // This is where you would link to a Google Apps Script 
+            // to send data to your spreadsheet.
+        });
+    </script>
+</body>
+</html>
+
