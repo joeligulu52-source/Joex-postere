@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulanga Secondary School – Prefect Elections 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2a5e;
+    --blue: #2255a4;
+    --sky: #5ba3d9;
+    --light: #d6eaf8;
+    --white: #ffffff;
+    --gold: #f0c040;
+    --shadow: 0 8px 32px rgba(26,42,94,0.18);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(135deg, #e8f4fc 0%, #c8dff0 50%, #b0ceea 100%);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--blue) 100%);
+    color: var(--white);
+    padding: 28px 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 10px);
+  }
+  .header-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+  /* SVG LOGO */
+  .logo-svg { width: 130px; height: 130px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.35)); animation: floatLogo 4s ease-in-out infinite; }
+  @keyframes floatLogo { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  header h1 { font-family: 'Cinzel', serif; font-size: clamp(1.1rem,4vw,1.8rem); letter-spacing: .12em; line-height: 1.3; }
+  header p  { font-size: .88rem; opacity: .8; letter-spacing: .08em; margin-top: 4px; }
+
+  .motto-badge {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-family: 'Cinzel', serif; font-size: .75rem; font-weight: 700;
+    padding: 4px 18px; border-radius: 20px; letter-spacing: .1em; margin-top: 6px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    text-align: center; padding: 32px 16px 8px;
+    font-family: 'Cinzel', serif; color: var(--navy);
+    font-size: clamp(1rem,3vw,1.4rem); letter-spacing: .1em;
+  }
+  .section-sub { text-align: center; color: var(--blue); font-size: .85rem; margin-bottom: 24px; }
+
+  /* ── INSTRUCTIONS ── */
+  .instructions {
+    max-width: 680px; margin: 0 auto 28px; background: var(--white);
+    border-left: 5px solid var(--sky); border-radius: 10px;
+    padding: 16px 20px; box-shadow: var(--shadow); font-size: .88rem; line-height: 1.7; color: #333;
+  }
+  .instructions strong { color: var(--navy); }
+
+  /* ── VOTING CARDS GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 20px; max-width: 1100px; margin: 0 auto; padding: 0 16px 48px;
+  }
+
+  .card {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    box-shadow: var(--shadow); transition: transform .25s, box-shadow .25s;
+    border-top: 5px solid var(--blue);
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(26,42,94,.22); }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: var(--white); padding: 14px 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pos-icon { font-size: 1.6rem; line-height: 1; }
+  .pos-info { flex: 1; }
+  .pos-title { font-family: 'Cinzel', serif; font-size: .95rem; letter-spacing: .07em; }
+  .pos-code { font-size: .72rem; opacity: .7; letter-spacing: .12em; margin-top: 2px; }
+
+  .candidates { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+  .candidate {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: 10px;
+    border: 2px solid var(--light); cursor: pointer;
+    transition: all .2s; position: relative;
+  }
+  .candidate:hover { border-color: var(--sky); background: #f0f8ff; }
+  .candidate.selected { border-color: var(--blue); background: var(--light); }
+  .candidate.selected::after {
+    content: '✓'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; background: var(--blue); color: #fff;
+    border-radius: 50%; font-size: .85rem; display: flex; align-items: center; justify-content: center;
+    display: grid; place-items: center;
+  }
+
+  .avatar {
+    width: 42px; height: 42px; border-radius: 50%; background: var(--light);
+    display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0;
+    border: 2px solid var(--sky);
+  }
+  .cand-name { font-weight: 700; font-size: .9rem; color: var(--navy); }
+  .cand-class { font-size: .75rem; color: #666; }
+
+  /* ── VOTE CODE INPUT ── */
+  .vote-code-section {
+    max-width: 480px; margin: 0 auto 32px; background: var(--white);
+    border-radius: 16px; box-shadow: var(--shadow); padding: 24px 28px; text-align: center;
+  }
+  .vote-code-section h3 { font-family: 'Cinzel', serif; color: var(--navy); font-size: 1rem; margin-bottom: 6px; }
+  .vote-code-section p  { font-size: .82rem; color: #555; margin-bottom: 16px; }
+  .code-input {
+    width: 100%; padding: 14px 18px; border: 2px solid var(--light);
+    border-radius: 10px; font-size: 1.2rem; letter-spacing: .3em; text-align: center;
+    font-family: 'Cinzel', serif; color: var(--navy); outline: none;
+    transition: border .2s;
+  }
+  .code-input:focus { border-color: var(--sky); }
+
+  /* ── SUBMIT BUTTON ── */
+  .submit-wrap { text-align: center; padding: 0 16px 48px; }
+  .submit-btn {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: var(--white); border: none; border-radius: 50px;
+    padding: 16px 56px; font-family: 'Cinzel', serif; font-size: 1.05rem;
+    letter-spacing: .15em; cursor: pointer; box-shadow: 0 6px 20px rgba(26,42,94,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .submit-btn:hover { transform: scale(1.04); box-shadow: 0 10px 28px rgba(26,42,94,.45); }
+  .submit-btn:active { transform: scale(.97); }
+
+  /* ── MODAL ── */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 100; align-items: center; justify-content: center; }
+  .overlay.show { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 20px; padding: 36px 32px; max-width: 420px; width: 90%;
+    text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.35); animation: popIn .35s cubic-bezier(.175,.885,.32,1.275);
+  }
+  @keyframes popIn { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal .tick { font-size: 3.5rem; margin-bottom: 12px; }
+  .modal h2 { font-family: 'Cinzel', serif; color: var(--navy); font-size: 1.3rem; margin-bottom: 8px; }
+  .modal p  { color: #555; font-size: .9rem; line-height: 1.6; }
+  .modal-ref { display: inline-block; margin: 14px 0; background: var(--light); border-radius: 8px; padding: 8px 24px; font-family: 'Cinzel', serif; color: var(--blue); font-size: 1.1rem; letter-spacing: .2em; }
+  .modal-close {
+    margin-top: 18px; background: var(--navy); color: #fff; border: none;
+    border-radius: 30px; padding: 10px 36px; font-family: 'Cinzel', serif;
+    font-size: .9rem; cursor: pointer; letter-spacing: .1em;
+  }
+
+  /* ── ERROR TOAST ── */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: #c0392b; color: #fff; padding: 12px 28px; border-radius: 30px;
+    font-size: .88rem; box-shadow: 0 4px 20px rgba(0,0,0,.2); transition: transform .4s; z-index: 200;
+    max-width: 90vw; text-align: center;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap { max-width: 680px; margin: 0 auto 12px; padding: 0 16px; }
+  .progress-label { font-size: .8rem; color: var(--navy); margin-bottom: 6px; font-weight: 700; }
+  .progress-bar { height: 8px; background: var(--light); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--sky), var(--blue)); border-radius: 10px; transition: width .4s; width: 0%; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <!-- SVG LOGO recreated from school badge -->
+    <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="100" cy="100" r="96" fill="#1a2a5e" />
+      <circle cx="100" cy="100" r="90" fill="#d6eaf8" />
+      <circle cx="100" cy="100" r="72" fill="white" />
+      <!-- Book spine -->
+      <rect x="78" y="98" width="44" height="10" rx="2" fill="#111" />
+      <!-- Left page -->
+      <path d="M78 98 Q70 80 82 68 Q90 64 100 66 L100 98 Z" fill="white" stroke="#aaa" stroke-width="1"/>
+      <line x1="85" y1="75" x2="99" y2="73" stroke="#bbb" stroke-width="1.2"/>
+      <line x1="84" y1="81" x2="99" y2="79" stroke="#bbb" stroke-width="1.2"/>
+      <line x1="84" y1="87" x2="99" y2="86" stroke="#bbb" stroke-width="1.2"/>
+      <line x1="85" y1="93" x2="99" y2="93" stroke="#bbb" stroke-width="1.2"/>
+      <!-- Right page (blue waves) -->
+      <path d="M100 66 Q110 64 118 68 Q130 80 122 98 L100 98 Z" fill="#5ba3d9"/>
+      <path d="M102 72 Q108 70 116 73" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M102 78 Q109 76 117 79" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M102 84 Q109 82 117 85" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M102 90 Q109 88 117 91" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- BULANGA text -->
+      <text x="100" y="118" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" fill="#1a2a5e">BULANGA</text>
+      <!-- Circular text -->
+      <path id="topArc" d="M 20,100 a80,80 0 0,1 160,0" fill="none"/>
+      <text font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#1a2a5e" letter-spacing="3">
+        <textPath href="#topArc" startOffset="8%">PROGRESSIVE. SEC. SCH.</textPath>
+      </text>
+      <!-- Banner -->
+      <path d="M30 148 Q100 138 170 148 Q100 160 30 148Z" fill="#5ba3d9" opacity=".85"/>
+      <path d="M30 148 L20 158 L30 155 Z" fill="#2255a4"/>
+      <path d="M170 148 L180 158 L170 155 Z" fill="#2255a4"/>
+      <text x="100" y="157" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="700" fill="white" letter-spacing="1">ENABLING THE FUTURE</text>
+    </svg>
+
+    <div>
+      <h1>BULANGA SECONDARY SCHOOL<br>PREFECT ELECTIONS 2026</h1>
+      <p>Official Online Voting Portal</p>
+      <span class="motto-badge">ENABLING THE FUTURE</span>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION TITLE -->
+<h2 class="section-title">CAST YOUR VOTE</h2>
+<p class="section-sub">Select ONE candidate per position. All votes are confidential.</p>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-label">Positions voted: <span id="progressCount">0</span> / <span id="totalPositions">0</span></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="instructions" style="max-width:680px;margin:0 auto 28px;padding:16px 20px">
+  <strong>📋 How to Vote:</strong><br>
+  1. Enter your unique <strong>Voter Code</strong> below.<br>
+  2. Select one candidate for each position.<br>
+  3. Click <strong>Submit Ballot</strong> to cast your vote.<br>
+  4. Each code can only be used <strong>once</strong>.
+</div>
+
+<!-- VOTER CODE -->
+<div class="vote-code-section">
+  <h3>🔐 VOTER CODE</h3>
+  <p>Enter the unique code issued to you by the Electoral Committee</p>
+  <input class="code-input" id="voterCode" type="text" maxlength="8" placeholder="e.g. BUL-0042" oninput="this.value=this.value.toUpperCase()">
+</div>
+
+<!-- VOTING CARDS -->
+<div class="grid" id="votingGrid"></div>
+
+<!-- SUBMIT -->
+<div class="submit-wrap">
+  <button class="submit-btn" onclick="submitVote()">⚖️ &nbsp;SUBMIT BALLOT</button>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="tick">🎉</div>
+    <h2>VOTE CAST SUCCESSFULLY!</h2>
+    <p>Thank you for participating in the Bulanga Secondary School Prefect Elections 2026.</p>
+    <div class="modal-ref" id="refNumber">REF: —</div>
+    <p style="font-size:.78rem;color:#888">Keep this reference number for your records.</p>
+    <button class="modal-close" onclick="closeModal()">DONE</button>
+  </div>
+</div>
+
+<!-- ERROR TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── POSITIONS & CANDIDATES ──────────────────────────────────────────────
+const positions = [
+  {
+    id: "PRES",
+    title: "President",
+    code: "POS-001",
+    icon: "🏛️",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "VPRES",
+    title: "Vice President",
+    code: "POS-002",
+    icon: "🤝",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "CJUDGE",
+    title: "Chief Judge",
+    code: "POS-003",
+    icon: "⚖️",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.5 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "SPEAK",
+    title: "Speaker",
+    code: "POS-004",
+    icon: "🎙️",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.5 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "PM1",
+    title: "Prime Minister 1",
+    code: "POS-005",
+    icon: "📜",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.5 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "PM2",
+    title: "Prime Minister 2",
+    code: "POS-006",
+    icon: "📋",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "DPM1",
+    title: "Deputy Prime Minister 1",
+    code: "POS-007",
+    icon: "🏅",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.5 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "DPM2",
+    title: "Deputy Prime Minister 2",
+    code: "POS-008",
+    icon: "🎗️",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.5 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MHEALTH",
+    title: "Minister of Health",
+    code: "POS-009",
+    icon: "🏥",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MGEND",
+    title: "Minister of Gender & Discipline",
+    code: "POS-010",
+    icon: "🕊️",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MACAD",
+    title: "Minister of Academics",
+    code: "POS-011",
+    icon: "📚",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.5 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MSPORT",
+    title: "Minister of Sports",
+    code: "POS-012",
+    icon: "⚽",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MENV",
+    title: "Minister of Environment",
+    code: "POS-013",
+    icon: "🌿",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.5 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.6 Science", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MICT",
+    title: "Minister of ICT",
+    code: "POS-014",
+    icon: "💻",
+    candidates: [
+      { name: "Candidate A", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Science", avatar: "👤" },
+      { name: "Candidate C", cls: "S.5 Arts", avatar: "👤" },
+    ]
+  },
+  {
+    id: "MFOOD",
+    title: "Minister of Food & Welfare",
+    code: "POS-015",
+    icon: "🍽️",
+    candidates: [
+      { name: "Candidate A", cls: "S.5 Science", avatar: "👤" },
+      { name: "Candidate B", cls: "S.6 Arts", avatar: "👤" },
+      { name: "Candidate C", cls: "S.5 Arts", avatar: "👤" },
+    ]
+  },
+];
+
+const selections = {}; // positionId -> candidateIndex
+const usedCodes = new Set(["BUL-DEMO"]); // pre-mark demo code as used
+
+// ── RENDER GRID ──────────────────────────────────────────────────────────
+function renderGrid() {
+  const grid = document.getElementById("votingGrid");
+  document.getElementById("totalPositions").textContent = positions.length;
+  grid.innerHTML = positions.map((pos, pi) => `
+    <div class="card" id="card-${pos.id}">
+      <div class="card-header">
+        <div class="pos-icon">${pos.icon}</div>
+        <div class="pos-info">
+          <div class="pos-title">${pos.title}</div>
+          <div class="pos-code">CODE: ${pos.code}</div>
+        </div>
+      </div>
+      <div class="candidates">
+        ${pos.candidates.map((c, ci) => `
+          <div class="candidate ${selections[pos.id]===ci?'selected':''}" 
+               id="cand-${pos.id}-${ci}"
+               onclick="selectCandidate('${pos.id}',${ci})">
+            <div class="avatar">${c.avatar}</div>
+            <div>
+              <div class="cand-name">${c.name}</div>
+              <div class="cand-class">${c.cls}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectCandidate(posId, idx) {
+  selections[posId] = idx;
+  // Re-render only that card's candidates
+  const pos = positions.find(p => p.id === posId);
+  pos.candidates.forEach((_, ci) => {
+    const el = document.getElementById(`cand-${posId}-${ci}`);
+    if (el) el.classList.toggle('selected', ci === idx);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(selections).length;
+  document.getElementById("progressCount").textContent = count;
+  const pct = (count / positions.length) * 100;
+  document.getElementById("progressFill").style.width = pct + "%";
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3200);
+}
+
+function submitVote() {
+  const code = document.getElementById("voterCode").value.trim();
+  if (!code) { showToast("⚠️ Please enter your Voter Code."); return; }
+
+  const missed = positions.filter(p => selections[p.id] === undefined);
+  if (missed.length > 0) {
+    showToast(`⚠️ Please vote for: ${missed[0].title}${missed.length>1?' (and '+(missed.length-1)+' more)':''}.`);
+    document.getElementById(`card-${missed[0].id}`).scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  if (usedCodes.has(code)) {
+    showToast("❌ This voter code has already been used.");
+    return;
+  }
+
+  usedCodes.add(code);
+  const ref = "BUL-" + Date.now().toString(36).toUpperCase().slice(-6);
+  document.getElementById("refNumber").textContent = "REF: " + ref;
+  document.getElementById("overlay").classList.add("show");
+}
+
+function closeModal() {
+  document.getElementById("overlay").classList.remove("show");
+  // Reset
+  Object.keys(selections).forEach(k => delete selections[k]);
+  document.getElementById("voterCode").value = "";
+  renderGrid();
+  updateProgress();
+}
+
+// Init
+renderGrid();
+updateProgress();
+</script>
+</body>
+</html>
